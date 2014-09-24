@@ -1,71 +1,208 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Primarycolor by diydiagnostics</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Primarycolor</h1>
-        <p>Color Reducing App -- useful for anyone trying to do image analysis</p>
-
-        <p class="view"><a href="https://github.com/diydiagnostics/primarycolor">View the Project on GitHub <small>diydiagnostics/primarycolor</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/diydiagnostics/primarycolor/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/diydiagnostics/primarycolor/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/diydiagnostics/primarycolor">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/diydiagnostics">diydiagnostics</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+<!DOCTYPE html>
+<!-- INTRODUCTION
+Author: Timothy E. Riedel
+Date: Fall 2013, updated Fall 2014
+Goal: Take a picture and do some kind of analysis on it.
+Summary: This app takes a photo (or loads one from device) and displays the photo on an HTML5 canvas. In a second canvas the photo is redisplayed with an algorthym that attemps to transform the colors within the original photo into basic primary colors (ROYGBIV). The algorithm doesn't work very well with shadows, greys, whites, and blacks. It also seems to have a problem with green.
+REFERENCES
+http://docs.webplatform.org/wiki/concepts/programming/drawing_images_onto_canvas#Loading_the_image_programmatically
+http://www.html5rocks.com/en/tutorials/file/dndfiles/
+http://www.w3.org/TR/FileAPI/
+http://mobilehtml5.org/
+http://www.codecademy.com/courses/
+http://stackoverflow.com/questions/11929099/html5-canvas-drawimage-ratio-bug-ios
+https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/HTML-canvas-guide/AddingMouseandTouchControlstoCanvas/AddingMouseandTouchControlstoCanvas.html
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Photo Transform</title>
+<meta name="viewport" content="width=device-width, initial-scale=.7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+<script>
+<!-- detectVerticalSquash & drawImageIOSFix = these functions may not be necessary in the future, but were critical at the time of writing due to a flaw in the iPhone that squished any photos displayed on an HTML5 canvas element. https://github.com/stomita/ios-imagefile-megapixel-->
+function detectVerticalSquash(img)
+{
+var iw = img.naturalWidth, ih = img.naturalHeight;
+var canvas = document.createElement('canvas');
+canvas.width = 1;
+canvas.height = ih;
+var ctx = canvas.getContext('2d');
+ctx.drawImage(img, 0, 0);
+var data = ctx.getImageData(0, 0, 1, ih).data;
+var sy = 0;
+var ey = ih;
+var py = ih;
+while (py > sy) {
+var alpha = data[(py - 1) * 4 + 3];
+if (alpha === 0) {
+ey = py;
+} else {
+sy = py;
+}
+py = (ey + sy) >> 1;
+}
+var ratio = (py / ih);
+return (ratio===0)?1:ratio;
+}
+function drawImageIOSFix(ctx, img, sx, sy, sw, sh, dx, dy, dw, dh)
+{
+var vertSquashRatio = detectVerticalSquash(img);
+ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);
+}
+<!-- window.onload necessary to keep javascripts from running before the app gets a chance to load entirely. -->
+window.onload = function()
+{
+var fileInput = document.getElementById('fileInput');
+var fileDisplayArea = document.getElementById('fileDisplayArea');
+<!-- fileInput.addEventListener looks for any change in the <input> tag indicating that the user has selected a file (picture). -->
+fileInput.addEventListener('change', function(e)
+{
+var file = fileInput.files[0];
+var imageType = /image.*/;
+<!-- if (file.type.match(imageType)) checks that the selected file is indeed an image. -->
+if (file.type.match(imageType))
+{
+<!-- new FileReader(); and reader.onload start some kind of file reading process in javaScript. I do not understand why this is necessary although it may simply slow things down to let the image load. -->
+var reader = new FileReader();
+reader.onload = function(e)
+{
+<!-- fileDisplayArea.innerHTML not needed but allows you to send a message at this point in the program. -->
+fileDisplayArea.innerHTML = "You picked and image!";
+<!--new Image() and img.onload start some kind of new image creation process in javaScript. I do not understand why this is necessary although it may simply slow things down to let the image load. -->
+var img = new Image();
+img.onload = function()
+{
+<!--This finally draws the image onto the first drawing canvas. The specific canvas is referred to by "context". This is established down in the HTML part of the file just under the first <canvas> tag. If we weren't worried about fixing an iPhone bug we would use context.drawImage(image, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, 600, 500) instead of drawImageIOSFix -->
+drawImageIOSFix(context,img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, 600, 500);
+<!--getImageData gets all the pixel information RGBalpha and store it in the variable imageInfo -->
+var imageInfo = context.getImageData(0,0, 600, 500);
+var canvas2 = document.getElementById('dataCanvas');
+var context2 = canvas2.getContext("2d");
+<!-- +++++++++++++++ BEGIN IMAGE PROCESSING +++++++++++++++ -->
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!--here begins the part of the program where the image processing occurs. -->
+var hueColor = 255;
+var maxRGB = 100;
+var minRGB = 50;
+var delta = 0;
+var satThreshold = 10/255;
+var brightThreshold = 10/255;
+for (i = 0; i < imageInfo.data.length; i += 4) {
+redC = imageInfo.data[i]/255;
+greenC = imageInfo.data[i + 1]/255;
+blueC = imageInfo.data[i + 2]/255;
+alphaC = imageInfo.data[i + 3];
+minRGB = Math.min(redC,Math.min(greenC,blueC));
+maxRGB = Math.max(redC,Math.max(greenC,blueC));
+delta = maxRGB - minRGB;
+if (redC == maxRGB){
+hueColor = 60*((greenC-blueC)/delta);
+}
+else if (greenC == maxRGB){
+hueColor = 60*((blueC-redC/delta)+2);
+}
+else if (blueC == maxRGB){
+hueColor = 60*((redC-greenC/delta)+4);
+}
+else {hueColor = "error";}
+if (hueColor < 0){hueColor = hueColor + 360;}
+var saturation = delta/maxRGB;
+if (maxRGB < brightThreshold || hueColor < 0 || hueColor == "error"){
+imageInfo.data[i] = 0;
+imageInfo.data[i + 1] = 0;
+imageInfo.data[i + 2] = 0;
+}
+else if (delta ==0 || saturation < satThreshold){
+imageInfo.data[i] = 255;
+imageInfo.data[i + 1] = 255;
+imageInfo.data[i + 2] = 255;
+}
+else if (hueColor >= 306 || hueColor <=12){
+imageInfo.data[i] = 255;
+imageInfo.data[i + 1] = 0;
+imageInfo.data[i + 2] = 0;
+}
+else if (hueColor >= 13 && hueColor <=41){
+imageInfo.data[i] = 255;
+imageInfo.data[i + 1] = 140;
+imageInfo.data[i + 2] = 0;
+}
+else if (hueColor >= 42 && hueColor <=69){
+imageInfo.data[i] = 255;
+imageInfo.data[i + 1] = 245;
+imageInfo.data[i + 2] = 0;
+}
+else if (hueColor >= 70 && hueColor <=166){
+imageInfo.data[i] = 0;
+imageInfo.data[i + 1] = 255;
+imageInfo.data[i + 2] = 0;
+}
+else if (hueColor >= 167 && hueColor <=251){
+imageInfo.data[i] = 0;
+imageInfo.data[i + 1] = 0;
+imageInfo.data[i + 2] = 255;
+}
+else if (hueColor >= 252 && hueColor <=305){
+imageInfo.data[i] = 255;
+imageInfo.data[i + 1] = 0;
+imageInfo.data[i + 2] = 255;
+}
+}
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- +++++++++++++++++ END IMAGE PROCESSING +++++++++++++++ -->
+<!-- display the new processed image in the second canvas -->
+context2.putImageData(imageInfo,0,0);	
+} <!-- end of img.onload -->
+img.src = reader.result;
+} <!-- end of reader.onload -->
+reader.readAsDataURL(file);
+} <!-- end of the if statement checking that file is an image -->
+else
+{
+<!-- this is what happens if the orignial file selected is not an image file -->
+fileDisplayArea.innerHTML = "File not supported!"
+} <!-- end of the else statement if file in NOT an image -->
+}); <!-- end of the fileInput.addEventListener function -->
+} <!-- end of the window.onload function -->
+</script>
+</head>
+<body>
+<div data-role="page">
+<div data-role="header">
+<h1>Primary Colors</h1></div><!-- /header -->
+<div data-role="content">	
+<h2>Push button to take picture and then it will be transformed into primary colors.</h2>
+<div>
+Press orange button to create or choose image file:
+<input type="file" id="fileInput" STYLE="background-color: #FF6600;">
+</div>
+<div id="fileDisplayArea"></div>
+<canvas id="myCanvas" width=600 height=500 style="border:1px solid #d3d3d3;"></canvas>
+<!-- This script puts the text on the canvas "myCanvas" -->
+<script>
+var canvas = document.getElementById('myCanvas');
+var context = canvas.getContext("2d");
+context.font = '20pt Calibri';
+context.fillStyle = "black";
+context.fillText("Original image will go here", 10, 20);
+</script>
+<canvas id="dataCanvas" width=600 height=500 style="border:1px solid #d3d3d3;"></canvas>
+<!-- This script puts text on the canvas "dataCanvas" -->
+<script>
+var canvas2 = document.getElementById('dataCanvas');
+var context2 = canvas2.getContext("2d");
+context2.font = '20pt Calibri';
+context2.fillStyle = "black";
+context2.fillText("Tranformed image will go here", 10, 20);
+</script>
+</div><!-- /content -->
+<div data-role="footer" data-position="fixed">
+<p>DIY Diagnostics</p>
+</div><!-- /footer -->
+</div><!-- /page -->
+</body>
 </html>
