@@ -177,23 +177,23 @@ fileDisplayArea.innerHTML = "File not supported!"
 </head>
 <body>
 <!--This will show the header on top of the app page-->
- 	<div data-role="page" id = "homepage">
-	<div data-role="header">
-	<h1>Photo Analysis</h1><!--This is the title of the app so it stays on top of the app even when someone is using it-->
-	</div><!-- /header -->
-	<div data-role="content">	
-	<p>We are using this app to upload a picture and do some kind of analysis on it. This is a web app. The following code has been developed by students and/or researchers of the Freshman Research Initiative DIY Diagnostics Stream at The University of Texas at Austin. 
-	This app is shared for demonstration purposes and should not be considered as an official product. And it's used for entertainment and learning purposes. Hence, the members of the DIY Stream, FRI, and The University of Texas system are not liable for anything related to this code.</p>	
-	<!--The app begins with the above statement. With the button that reads Upload a Picture. --> 
-	<a href="#Qone" data-role="button"> Upload a Picture </a>
-	</div><!-- /content -->
-	<div data-role = "footer" data-position="fixed">
-	<!--This is for the footer so that it stays at the bottom of the app, which is "an app by chandra" when anyone is using the app-->
-	<p>An App by Chandra S</p>
-	</div>
-	</div><!-- /page1-->	
+ <div data-role="page" id = "homepage">
+<div data-role="header">
+<h1>Primary colors</h1><!--This is the title of the app so it stays on top of the app even when someone is using it-->
+</div><!-- /header -->
+<div data-role="content">	
+<p>We are using this app to upload a picture and do some kind of analysis on it. This is a web app. The following code has been developed by students and/or researchers of the Freshman Research Initiative DIY Diagnostics Stream at The University of Texas at Austin. 
+This app is shared for demonstration purposes and should not be considered as an official product. And it's used for entertainment and learning purposes. Hence, the members of the DIY Stream, FRI, and The University of Texas system are not liable for anything related to this code.</p>	
+<!--The app begins with the above statement. With the button that reads Upload a Picture. --> 
+<a href="#Qone" data-role="button"> Upload a Picture </a>
+</div><!-- /content -->
+<div data-role = "footer" data-position="fixed">
+<!--This is for the footer so that it stays at the bottom of the app, which is "an app by chandra" when anyone is using the app-->
+<p>An App by Chandra S/DIY Diagnostics</p>
+</div>
+</div><!-- /page1-->	
 	
-<div data-role="page">
+<div data-role="page" id="Qone"> <!--This id="one" connects the second page to the first page-->
 <div data-role="header">
 <h1>Primary Colors</h1></div><!-- /header -->
 <div data-role="content">	
@@ -223,7 +223,7 @@ context2.fillText("Transformed image will go here", 10, 20);
 </script>
 </div><!-- /content -->
 <div data-role="footer" data-position="fixed">
-<p>DIY Diagnostics</p>
+<p>An App by Chandra S/DIY Diagnostics </p>
 </div><!-- /footer -->
 </div><!-- /page -->
 </body>
