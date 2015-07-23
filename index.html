@@ -3,7 +3,7 @@
 Author: Timothy E. Riedel
 CoAurthor: Chandra Subedi
 Date: Fall 2013, updated fall 2014.1
-Goal: Take a picture and do some kind of analysis on it.
+Goal: Take a picture and do some kind of analysis on it. 
 Summary: This app takes a photo (or loads one from device) and displays the photo on an HTML5 canvas. 
 In a second canvas the photo is redisplayed with an algorthym that attemps to transform the colors within the original photo into basic primary colors (ROYGBIV). 
 The algorithm doesn't work very well with shadows, greys, whites, and blacks. It also seems to have a problem with green.
@@ -174,6 +174,7 @@ fileDisplayArea.innerHTML = "File not supported!"
 }); <!-- end of the fileInput.addEventListener function -->
 } <!-- end of the window.onload function -->
 </script>
+
 </head>
 <body>
 <!--This will show the header on top of the app page-->
@@ -204,6 +205,7 @@ Press orange button to create or choose image file:
 </div>
 <div id="fileDisplayArea"></div>
 <canvas id="myCanvas" width=600 height=500 style="border:1px solid #d3d3d3;"></canvas>
+
 <!-- This script puts the text on the canvas "myCanvas" -->
 <script>
 var canvas = document.getElementById('myCanvas');
