@@ -28,22 +28,24 @@ https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/H
 <script src="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 
 <script>
-<!--This will show the header on top of the app page-->
+//This will show the header on top of the app page//
      <div data-role="page" id = "homepage">
 	<div data-role="header">
-		<h1>Cold or Allergy</h1><!--This is the title of the app so it stays on top of the app even when someone is using it-->
+		<h1>Photo Analysis</h1> 
+		//This is the title of the app so it stays on top of the app even when someone is using it//
 	</div><!-- /header -->
 	<div data-role="content">	
 	<p>We are using this app to upload a picture and do some kind of analysis on it. This is a web app. The following code has been developed by students and/or researchers of the Freshman Research Initiative DIY Diagnostics Stream at The University of Texas at Austin. 
 	This app is shared for demonstration purposes and should not be considered as an official product. And it's used for entertainment and learning purposes. Hence, the members of the DIY Stream, FRI, and The University of Texas system are not liable for anything related to this code.</p>	
-	<!--The app begins with the above statement. With the button that reads Upload a Picture. --> 
+	//The app begins with the above statement. With the button that reads Upload a Picture.//
 	<a href="#Qone" data-role="button"> Upload a Picture </a>
 	</div><!-- /content -->
 	<div data-role = "footer" data-position="fixed">
-	<!--This is for the footer so that it stays at the bottom of the app, which is "an app by chandra" when anyone is using the app-->
+	//This is for the footer so that it stays at the bottom of the app, which is "an app by chandra" when anyone is using the app//
 	<p>An App by Chandra S</p>
 	</div>
-	</div><!-- /page1-->
+	</div> 
+	//page 1//
 
 <!-- detectVerticalSquash & drawImageIOSFix = these functions may not be necessary in the future, but were critical at the time of writing due to a flaw in the iPhone that squished any photos displayed on an HTML5 canvas element. https://github.com/stomita/ios-imagefile-megapixel-->
 function detectVerticalSquash(img)
