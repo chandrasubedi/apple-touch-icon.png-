@@ -32,7 +32,7 @@ https://developer.apple.com/library/safari/documentation/AudioVideo/Conceptual/H
 <!-- detectVerticalSquash & drawImageIOSFix = these functions may not be necessary in the future, but were critical at the time of writing due to a flaw in the iPhone that squished any photos displayed on an HTML5 canvas element. https://github.com/stomita/ios-imagefile-megapixel-->
 function detectVerticalSquash(img)
 {
-var iw = img.naturalWidth, ih = img.naturalHeight;
+var iw = img.naturalWidth, ih = img.naturalHeight; 
 var canvas = document.createElement('canvas');
 canvas.width = 1;
 canvas.height = ih;
